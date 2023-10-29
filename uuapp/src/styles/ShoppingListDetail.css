@@ -1,0 +1,7 @@
+.shoppinglistdetail-name {
+    font-size: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
