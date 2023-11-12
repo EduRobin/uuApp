@@ -12,3 +12,62 @@
     text-align: center;
     margin-bottom: 20px;
   }
+
+  .shopping-lists-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 16px; 
+    margin-bottom: 16px; 
+  }
+  
+  .shopping-list-tile {
+    background-color: #f7f7f7; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+
+  }
+
+  .top-bar {
+  display: flex;
+  justify-content: space-between; 
+  padding: 10px; 
+  margin-bottom: 20px; 
+}
+
+.top-bar button {
+  padding: 10px 20px; 
+  margin-right: 10px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  font-size: 16px; 
+  background-color: #007bff; 
+  color: white; 
+}
+
+.top-bar button:last-child {
+  margin-right: 0; 
+}
+
+.top-bar button:hover {
+  background-color: #0056b3;
+}
+
+
+.top-bar button.create-button {
+  background-color: #28a745;
+}
+
+.top-bar button.create-button:hover {
+  background-color: #218838;
+}
+
+
+.top-bar button.archive-toggle-button {
+  background-color: #6c757d;
+}
+
+.top-bar button.archive-toggle-button:hover {
+  background-color: #5a6268;
+}

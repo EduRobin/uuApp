@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route >
           <Route path="*" element={<Home />}/>
-          <Route path="/ShoppingListDetail" element={<ShoppingListDetail />} />
+          <Route path="/ShoppingListDetail/:listName" element={<ShoppingListDetail />} />
           <Route path="/Home" element={<Home />}/>
         </Route>
       </Routes>
