@@ -1,14 +1,26 @@
 import './ShoppingListDetail';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ShoppingListDetail.css';
 import { useNavigate } from 'react-router-dom';
+import { mockListItems } from '../mockData/mockData';
+import { fetchData, createItem } from '../api';
 
 
 function ShoppingListDetail() {
 
 
+    const useMockData = process.env.REACT_APP_USE_MOCK_DATA === 'true';
+    const [items, setItems] = useState([]);
 
+    useEffect(() => {
+    const loadData = async () => {
+      const data = useMockData ? mockListItems : await fetchData();
+      setItems(data);
+    };
+
+    loadData();
+    });
     //STYLY
 
 
