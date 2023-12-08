@@ -5,21 +5,28 @@ import '../styles/ShoppingListDetail.css';
 import { useNavigate } from 'react-router-dom';
 import { mockListItems } from '../mockData/mockData';
 import { fetchData, createItem } from '../api';
+import { useTheme } from './ThemeContext';
+import '../i18n';
+import { useTranslation } from 'react-i18next';
+
 
 
 function ShoppingListDetail() {
 
+    const { t } = useTranslation();
+
+    const { theme, toggleTheme } = useTheme();
 
     const useMockData = process.env.REACT_APP_USE_MOCK_DATA === 'true';
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-    const loadData = async () => {
-      const data = useMockData ? mockListItems : await fetchData();
-      setItems(data);
-    };
+        const loadData = async () => {
+            const data = useMockData ? mockListItems : await fetchData();
+            setItems(data);
+        };
 
-    loadData();
+        loadData();
     });
     //STYLY
 
@@ -96,17 +103,46 @@ function ShoppingListDetail() {
     //PROMĚNNÉ
 
     const predefinedIngredients = [
-        'Hovězí maso',
-        'Cibule',
-        'Mrkev',
-        'Petržel',
-        'Celer',
-        'Mouka',
-        'Sůl',
-        'Banán',
-        'Pepř',
-        'Jablko',
-        'Kuřecí maso',
+        t('Beef'),
+    t('Onion'),
+    t('Carrot'),
+    t('Parsley'),
+    t('Celery'),
+    t('Flour'),
+    t('Salt'),
+    t('Banana'),
+    t('Pepper'),
+    t('Apple'),
+    t('Chicken'),
+    t('Tomato'),
+    t('Potato'),
+    t('Garlic'),
+    t('Mushroom'),
+    t('Broccoli'),
+    t('Bell Pepper'),
+    t('Spinach'),
+    t('Orange'),
+    t('Pork'),
+    t('Salmon'),
+    t('Rice'),
+    t('Zucchini'),
+    t('Avocado'),
+    t('Lemon'),
+    t('Millet'),
+    t('Quinoa'),
+    t('Eggplant'),
+    t('Beans'),
+    t('Peas'),
+    t('Corn'),
+    t('Nuts'),
+    t('Honey'),
+    t('Yogurt'),
+    t('Cheese'),
+    t('Eggs'),
+    t('Butter'),
+    t('Oil'),
+    t('Vinegar'),
+    t('Pasta'),
     ];
 
 
@@ -143,8 +179,8 @@ function ShoppingListDetail() {
 
     const toggleChecked = (ingredient) => { // Nová funkce pro přepínání stavu checkboxů
         setCheckedItems(prevState => ({
-        ...prevState,
-        [ingredient]: !prevState[ingredient]
+            ...prevState,
+            [ingredient]: !prevState[ingredient]
         }));
     };
 
@@ -158,7 +194,7 @@ function ShoppingListDetail() {
     // Funkce pro přidání vybrané suroviny do uživatelova seznamu
     const addIngredient = () => {
         if (selectedIngredient && !userIngredients.includes(selectedIngredient)) {
-        setUserIngredients([...userIngredients, selectedIngredient]);
+            setUserIngredients([...userIngredients, selectedIngredient]);
         }
     };
 
@@ -176,98 +212,101 @@ function ShoppingListDetail() {
 
 
     return (
-        <div>
+        <div className={theme === 'dark' ? 'shoppinglist-detail-dark-mode' : ''}>
+            <div className='shoppinglistdetail-container'>
 
-            <div className='go-back-button'> {/*dodělat go back button navigaci*/}
-                <button onClick={leaveGroup}>Go back</button>
-            </div>
-            <div className='shoppinglistdetail'>
-                {isOwner && (
-                    <div className='shoppinglistdetail-name'>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={listName}
-                            onChange={(e) => changeListName(e.target.value)}
-                        />
-
-                        {listName}
-
-                    </div>
-                )}
-            </div>
-
-            <div className='shoppinglistdetail'>
-                {!isOwner && (
-                    <div className='shoppinglistdetail-name'>
-
-                        {listName}
-
-                    </div>
-                )}
-            </div>
-
-
-            <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-                <button style={isOwner ? ownerButtonStyle : userButtonStyle} onClick={switchRole}>
-                    {isOwner ? 'Owner' : 'User'}
-                </button>
-            </div>
-
-
-            <h1 style={{ textAlign: 'center' }}>Item List</h1>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <select
-                    value={selectedIngredient}
-                    onChange={(e) => setSelectedIngredient(e.target.value)}
-                    style={{ padding: '8px', marginRight: '10px', fontSize: '16px' }}
-                >
-                    <option value="">Vyberte surovinu</option>
-                    {predefinedIngredients.map((ingredient, index) => (
-                        <option key={index} value={ingredient}>
-                            {ingredient}
-                        </option>
-                    ))}
-                </select>
-
-                <button onClick={addIngredient} style={buttonStyle}>Přidat do seznamu</button>
-
-            </div>
-
-            <div>
-                {userIngredients.map((ingredient, index) => (
-                    <div key={index} style={listItemStyle}>
-                        <input
-                            type="checkbox"
-                            checked={!!checkedItems[ingredient]}
-                            onChange={() => toggleChecked(ingredient)}
-                            style={checkboxStyle}
-                        />
-                        <p style={ingredientStyle}>{ingredient}</p>
-                        <button onClick={() => removeIngredient(ingredient)} style={removeButtonStyle}>Odebrat</button>
-                    </div>
-                ))}
-            </div>
-            <div>
-                <div>
-                    {/* Seznam všech členů */}
-                    <ul>
-                        {members.map((member, index) => (
-                            <li key={index}>
-                                {member}
-                                {isOwner ? (
-                                    <button onClick={() => removeMember(member)} style={leaveKickButtonStyle}>Kick</button>
-                                ) : (
-                                    member === 'User 1' && <button onClick={() => leaveGroup(member)} style={leaveKickButtonStyle}>Leave</button>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
+                <div className='go-back-button'> {/*dodělat go back button navigaci*/}
+                    <button onClick={leaveGroup}>{t("Go back")}</button>
+                </div>
+                <div className='shoppinglistdetail'>
                     {isOwner && (
-                        <button onClick={addMember} style={addButtonStyle}>
-                            Přidat člena
-                        </button>
+                        <div className='shoppinglistdetail-name'>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={listName}
+                                onChange={(e) => changeListName(e.target.value)}
+                            />
+
+                            {listName}
+
+                        </div>
                     )}
+                </div>
+
+                <div className='shoppinglistdetail'>
+                    {!isOwner && (
+                        <div className='shoppinglistdetail-name'>
+
+                            {listName}
+
+                        </div>
+                    )}
+                </div>
+
+
+                <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                    <button style={isOwner ? ownerButtonStyle : userButtonStyle} onClick={switchRole}>
+                        {isOwner ? t("Owner") : t('User')}
+                    </button>
+                    
+                </div>
+
+
+                <h1 style={{ textAlign: 'center' }}>{t("Item List")}</h1>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    <select
+                        value={selectedIngredient}
+                        onChange={(e) => setSelectedIngredient(e.target.value)}
+                        style={{ padding: '8px', marginRight: '10px', fontSize: '16px' }}
+                    >
+                        <option value="">{t("Vyberte surovinu")}</option>
+                        {predefinedIngredients.map((ingredient, index) => (
+                            <option key={index} value={ingredient}>
+                                {ingredient}
+                            </option>
+                        ))}
+                    </select>
+
+                    <button onClick={addIngredient} style={buttonStyle}>{t("Přidat do seznamu")}</button>
+
+                </div>
+
+                <div>
+                    {userIngredients.map((ingredient, index) => (
+                        <div key={index} style={listItemStyle}>
+                            <input
+                                type="checkbox"
+                                checked={!!checkedItems[ingredient]}
+                                onChange={() => toggleChecked(ingredient)}
+                                style={checkboxStyle}
+                            />
+                            <p style={ingredientStyle}>{ingredient}</p>
+                            <button onClick={() => removeIngredient(ingredient)} style={removeButtonStyle}>{t("Odebrat")}</button>
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    <div>
+                        {/* Seznam všech členů */}
+                        <ul>
+                            {members.map((member, index) => (
+                                <li key={index}>
+                                    {member}
+                                    {isOwner ? (
+                                        <button onClick={() => removeMember(member)} style={leaveKickButtonStyle}>{t("Kick")}</button>
+                                    ) : (
+                                        member === 'User 1' && <button onClick={() => leaveGroup(member)} style={leaveKickButtonStyle}>{t("Leave")}</button>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                        {isOwner && (
+                            <button onClick={addMember} style={addButtonStyle}>
+                                {t('Přidat člena')}
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

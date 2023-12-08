@@ -5,3 +5,12 @@
     align-items: center;
     padding: 50px;
 }
+
+
+.shoppinglistdetail-container {
+    height: 100vh;
+}
+
+.shoppinglist-detail-dark-mode {
+    height: 100vh;
+}
